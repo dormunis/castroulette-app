@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private static final String JSON_KEY = "spinWheel";
 
-    private static final float MAXIMUM_VELOCITY = 36;
+    private static final float MAXIMUM_VELOCITY = 42;
     private static final long WAIT_TIME_INTERVAL = 50;
     private static final long CLICK_INTERVAL = 356;
     private static final float VELOCITY_LIMIT = 15;
