@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final float MINIMAL_VELOCITY = 3;
     private static final float MAXIMUM_VELOCITY = 32;
     private static final long WAIT_TIME_INTERVAL = 100;
-    private static final long CLICK_INTERVAL = 400;
+    private static final long CLICK_INTERVAL = 300;
     private static final float VELOCITY_LIMIT = 15;
 
     private long lastUpdate = 0;
@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Log.e(TAG, "Exception while sending message", e);
             }
         } else {
-            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
         }
     }
 
