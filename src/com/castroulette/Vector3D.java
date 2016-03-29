@@ -43,7 +43,7 @@ public class Vector3D {
     }
 
     public float dot() {
-        return (float) Math.sqrt(_x * _x + _y * _y + _z * _z);
+        return (float) Math.sqrt((_x * _x) + (_y * _y) + (_z * _z));
     }
 
     public void setDefault() {

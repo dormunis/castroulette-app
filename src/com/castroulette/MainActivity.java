@@ -45,10 +45,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private static final String JSON_KEY = "spinWheel";
 
+    private static final float NOISE = 0.5f;
     private static final float MINIMAL_VELOCITY = 3;
     private static final float MAXIMUM_VELOCITY = 32;
     private static final long WAIT_TIME_INTERVAL = 100;
-    private static final long CLICK_INTERVAL = 300;
+    private static final long CLICK_INTERVAL = 250;
     private static final float VELOCITY_LIMIT = 15;
 
     private long lastUpdate = 0;
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (isClick()) {
-                        sendMessage("0");
+                        sendMessage("{\"bulbul\": \"akabulbul\"}");
                         Log.d(TAG, "click");
                     }
 
@@ -367,7 +368,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Log.e(TAG, "Exception while sending message", e);
             }
         } else {
-//            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "No ChromeCast connected.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -414,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     topSessionVelocity = velocity;
 
 
-                if (velocity < topSessionVelocity && velocity > MINIMAL_VELOCITY) {
+                if ((velocity + NOISE) < topSessionVelocity && velocity > MINIMAL_VELOCITY) {
                     castVelocity(normalize(velocity));
                     resetAccValues();
                 }
@@ -426,6 +427,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private void castVelocity(float velocity) {
         JSONObject mJsonMessage = new JSONObject();
+        Log.d(TAG, "Velocity: " + velocity);
         try {
             mJsonMessage.put(JSON_KEY, velocity);
         } catch (JSONException e) {
@@ -457,10 +459,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private float normalize(float num) {
-        Log.d(TAG, "velocity: " + num);
         num = num > MAXIMUM_VELOCITY ? MAXIMUM_VELOCITY : num;
-        Log.d(TAG, "normal: " + ((num* VELOCITY_LIMIT) / MAXIMUM_VELOCITY));
-
         return ((num * VELOCITY_LIMIT) / MAXIMUM_VELOCITY);
     }
 
