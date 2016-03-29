@@ -45,11 +45,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private static final String JSON_KEY = "spinWheel";
 
-    private static final float NOISE = 0.5f;
-    private static final float MINIMAL_VELOCITY = 3;
-    private static final float MAXIMUM_VELOCITY = 32;
-    private static final long WAIT_TIME_INTERVAL = 100;
-    private static final long CLICK_INTERVAL = 250;
+    private static final float MAXIMUM_VELOCITY = 36;
+    private static final long WAIT_TIME_INTERVAL = 50;
+    private static final long CLICK_INTERVAL = 356;
     private static final float VELOCITY_LIMIT = 15;
 
     private long lastUpdate = 0;
@@ -95,7 +93,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         sendMessage("{\"bulbul\": \"akabulbul\"}");
                         Log.d(TAG, "click");
                     }
-
+                    else {
+                        castVelocity(normalize(topSessionVelocity));
+                    }
                     resetAccValues();
                     v.findViewById(R.id.button).setBackgroundResource(R.drawable.button);
 
@@ -413,12 +413,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 if (velocity > topSessionVelocity)
                     topSessionVelocity = velocity;
-
-
-                if ((velocity + NOISE) < topSessionVelocity && velocity > MINIMAL_VELOCITY) {
-                    castVelocity(normalize(velocity));
-                    resetAccValues();
-                }
 
                 lastPosition.set(currentPosition);
             }
